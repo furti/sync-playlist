@@ -15,16 +15,18 @@
 
 </head>
 
-<body ng-app="syncPlaylist" layout="row" ng-cloak>
+<body ng-app="syncPlaylist.main" layout="row" ng-cloak ng-controller="SyncPlaylistController as sync">
 
   <md-sidenav class="md-sidenav-left" md-component-id="left" md-is-locked-open="true">
 
     <md-toolbar>
       <div class="md-toolbar-tools">
-        <md-icon>input</md-icon><h3 flex>Source</h3>
+        <md-icon>input</md-icon>
+        <h3 flex>Source</h3>
       </div>
     </md-toolbar>
 
+    <file-explorer source="sync.source"></file-explorer>
   </md-sidenav>
 
 
@@ -32,7 +34,8 @@
 
     <md-toolbar layout="row" class="md-hue-2">
       <div class="md-toolbar-tools">
-        <md-icon>queue_music</md-icon><h3 flex>Playlist</h3>
+        <md-icon>queue_music</md-icon>
+        <h3 flex>Playlist</h3>
       </div>
     </md-toolbar>
 
@@ -46,7 +49,8 @@
 
     <md-toolbar>
       <div class="md-toolbar-tools">
-        <md-icon>save</md-icon><h3 flex>Target</h3>
+        <md-icon>save</md-icon>
+        <h3 flex>Target</h3>
       </div>
     </md-toolbar>
 
@@ -57,17 +61,8 @@
   <script src="./bower_components/angular-animate/angular-animate.js"></script>
   <script src="./bower_components/angular-aria/angular-aria.js"></script>
   <script type="text/javascript" src="./bower_components/angular-material/angular-material.js"></script>
-
-  <script type="text/javascript">
-    angular
-      .module('syncPlaylist', ['ngMaterial'])
-      .config(function($mdThemingProvider, $mdIconProvider) {
-
-        $mdThemingProvider.theme('default')
-          .primaryPalette('teal')
-          .accentPalette('orange');
-      });
-  </script>
+  <script type="text/javascript" src="./scripts/sync-typescript.js"></script>
+  <script type="text/javascript" src="./scripts/file-explorer.js"></script>
 
 </body>
 

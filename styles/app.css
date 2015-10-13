@@ -1,3 +1,8 @@
 md-toolbar md-icon {
   margin-right: 0.5em;
 }
+#content {
+  border-color: #F6F6F6;
+  border-style: solid;
+  border-width: 0 2px 0 2px;
+}
