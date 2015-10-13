@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Synchronize Playlist</title>
+
+  <meta charset="utf-8">
+  <meta name="description" content="">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+
+  <link rel="stylesheet" href="./bower_components/angular-material/angular-material.css" />
+  <link rel="stylesheet" href="styles/cloak.css" />
+  <link rel="stylesheet" href="styles/material-icons.css" />
+  <link rel="stylesheet" href="styles/app.css" />
+
+</head>
+
+<body ng-app="syncPlaylist" layout="row" ng-cloak>
+
+  <md-sidenav class="md-sidenav-left" md-component-id="left" md-is-locked-open="true">
+
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <md-icon>input</md-icon><h3 flex>Source</h3>
+      </div>
+    </md-toolbar>
+
+  </md-sidenav>
+
+
+  <div flex layout="column" tabIndex="-1" role="main">
+
+    <md-toolbar layout="row" class="md-hue-2">
+      <div class="md-toolbar-tools">
+        <md-icon>queue_music</md-icon><h3 flex>Playlist</h3>
+      </div>
+    </md-toolbar>
+
+    <md-content flex id="content">
+      Test
+    </md-content>
+
+  </div>
+
+  <md-sidenav class="md-sidenav-right" md-component-id="right" md-is-locked-open="true">
+
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <md-icon>save</md-icon><h3 flex>Target</h3>
+      </div>
+    </md-toolbar>
+
+  </md-sidenav>
+
+
+  <script src="./bower_components/angular/angular.js"></script>
+  <script src="./bower_components/angular-animate/angular-animate.js"></script>
+  <script src="./bower_components/angular-aria/angular-aria.js"></script>
+  <script type="text/javascript" src="./bower_components/angular-material/angular-material.js"></script>
+
+  <script type="text/javascript">
+    angular
+      .module('syncPlaylist', ['ngMaterial'])
+      .config(function($mdThemingProvider, $mdIconProvider) {
+
+        $mdThemingProvider.theme('default')
+          .primaryPalette('teal')
+          .accentPalette('orange');
+      });
+  </script>
+
+</body>
+
+</html>

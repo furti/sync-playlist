@@ -1,0 +1,34 @@
+{
+  "name": "sync-playlist",
+  "version": "0.0.1",
+  "description": "Synchronize your Playlists to a USB Stick, SD Card or whatever you want",
+  "main": "index.html",
+  "dependencies": {
+    "nw": "^0.12.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nw"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/furti/sync-playlist.git"
+  },
+  "keywords": [
+    "playlist",
+    "synchronize",
+    "sync"
+  ],
+  "author": "Daniel Furtlehner",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/furti/sync-playlist/issues"
+  },
+  "homepage": "https://github.com/furti/sync-playlist#readme",
+  "window": {
+    "width": 1024,
+    "height": 768,
+    "icon": "icons/library_music_48x48.png"
+  }
+}
