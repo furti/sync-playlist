@@ -1,8 +1,8 @@
 md-toolbar md-icon {
   margin-right: 0.5em;
 }
-#content {
-  border-color: #F6F6F6;
-  border-style: solid;
-  border-width: 0 2px 0 2px;
+
+#playlists {
+  /*margin: 0 5px;*/
+  /*box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.26), -2px 0 5px rgba(0, 0, 0, 0.26);*/
 }
