@@ -1,1 +1,13 @@
-<md-content>content</md-content>
+<md-content>
+  <md-content layout="row" layout-align="start center" layout-padding>
+    <div flex class="directory-label">
+      <md-tooltip>{{fileExplorer.directory}}</md-tooltip>
+      {{fileExplorer.directory}}
+    </div>
+    <!--<input type="file" nwdirectory /> see https://github.com/nwjs/nw.js/wiki/File-dialogs for further details-->
+    <md-button class="md-icon-button">
+      <md-icon>folder_open</md-icon>
+    </md-button>
+  </md-content>
+  <md-divider></md-divider>
+</md-content>

@@ -3,7 +3,12 @@
 module SyncPlaylist {
 
     class SyncPlaylistController {
-      public static $inject = [];
+        public static $inject = [];
+        public source: string;
+
+        constructor() {
+            this.source = '/lets/try/a/really/really/really/long/folder';
+        }
     }
 
     angular.module('syncPlaylist.main', ['ngMaterial', 'syncPlaylist.directives'])

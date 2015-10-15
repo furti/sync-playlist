@@ -26,7 +26,7 @@
       </div>
     </md-toolbar>
 
-    <file-explorer source="sync.source" flex></file-explorer>
+    <file-explorer directory="sync.source" on-directory-change="sync.directoryChanged(directory)" flex></file-explorer>
   </md-sidenav>
 
 
@@ -54,7 +54,7 @@
       </div>
     </md-toolbar>
 
-    <file-explorer source="sync.target" flex></file-explorer>
+    <file-explorer directory="sync.target" flex></file-explorer>
   </md-sidenav>
 
 

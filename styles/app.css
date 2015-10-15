@@ -1,8 +1,7 @@
 md-toolbar md-icon {
   margin-right: 0.5em;
 }
-
-#playlists {
-  /*margin: 0 5px;*/
-  /*box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.26), -2px 0 5px rgba(0, 0, 0, 0.26);*/
+.directory-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
