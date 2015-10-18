@@ -3,7 +3,7 @@
 module SyncPlaylist {
 
     class FileExplorerController {
-        public static $inject = ['$scope'];
+        public static $inject = ["$scope"];
         public directory: string;
 
         constructor($scope) {
@@ -11,17 +11,17 @@ module SyncPlaylist {
         }
     }
 
-    angular.module('syncPlaylist.directives', [])
-        .directive('fileExplorer', function() {
+    angular.module("syncPlaylist.directives", [])
+        .directive("fileExplorer", function() {
             return {
-                restrict: 'E',
+                restrict: "E",
                 scope: {
-                    directory: '=',
-                    onDirectoryChange: '&' //call wit onDirectoryChange({directory: newDir});
+                    directory: "=",
+                    onDirectoryChange: "&" //call wit onDirectoryChange({directory: newDir});
                 },
                 controller: FileExplorerController,
-                controllerAs: 'fileExplorer',
-                templateUrl: 'templates/file-explorer.html'
+                controllerAs: "fileExplorer",
+                templateUrl: "templates/file-explorer.html"
             };
         });
 }

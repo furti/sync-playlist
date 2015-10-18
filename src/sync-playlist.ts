@@ -7,15 +7,15 @@ module SyncPlaylist {
         public source: string;
 
         constructor() {
-            this.source = '/lets/try/a/really/really/really/long/folder';
+            this.source = "/lets/try/a/really/really/really/long/folder";
         }
     }
 
-    angular.module('syncPlaylist.main', ['ngMaterial', 'syncPlaylist.directives'])
-        .config(['$mdThemingProvider', function($mdThemingProvider: ng.material.IThemingProvider) {
-            $mdThemingProvider.theme('default')
-                .primaryPalette('teal')
-                .accentPalette('red');
+    angular.module("syncPlaylist.main", ["ngMaterial", "syncPlaylist.directives"])
+        .config(["$mdThemingProvider", function($mdThemingProvider: ng.material.IThemingProvider) {
+            $mdThemingProvider.theme("default")
+                .primaryPalette("teal")
+                .accentPalette("red");
         }])
-        .controller('SyncPlaylistController', SyncPlaylistController);
+        .controller("SyncPlaylistController", SyncPlaylistController);
 }
