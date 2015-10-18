@@ -15,7 +15,7 @@ module SyncPlaylist {
         .config(['$mdThemingProvider', function($mdThemingProvider: ng.material.IThemingProvider) {
             $mdThemingProvider.theme('default')
                 .primaryPalette('teal')
-                .accentPalette('orange');
+                .accentPalette('red');
         }])
         .controller('SyncPlaylistController', SyncPlaylistController);
 }
