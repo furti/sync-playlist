@@ -5,3 +5,18 @@ md-toolbar md-icon {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.md-sidenav-right {
+  overflow: visible;
+}
+
+/**
+ * fab buttons that break the edge of the container element
+ */
+
+.md-button.md-fab.md-fab-bottom-left-edge {
+  top: auto;
+  right: auto;
+  left: -36px;
+  bottom: 20px;
+  position: absolute;
+}
