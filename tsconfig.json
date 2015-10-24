@@ -5,6 +5,7 @@
   "filesGlob": "./src/*.ts",
   "exclude": [],
   "files": [
+    "src/directory-picker.ts",
     "src/file-explorer.ts",
     "src/sync-playlist.ts",
     "typings/angular-material/angular-material.d.ts",

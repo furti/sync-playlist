@@ -20,3 +20,11 @@ md-toolbar md-icon {
   bottom: 20px;
   position: absolute;
 }
+
+/**
+ * Directory Picker
+ */
+
+directory-picker input {
+  display: none;
+}

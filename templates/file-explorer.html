@@ -4,10 +4,7 @@
       <md-tooltip>{{fileExplorer.directory}}</md-tooltip>
       {{fileExplorer.directory}}
     </div>
-    <!--<input type="file" nwdirectory /> see https://github.com/nwjs/nw.js/wiki/File-dialogs for further details-->
-    <md-button class="md-icon-button">
-      <md-icon>folder_open</md-icon>
-    </md-button>
+    <directory-picker on-directory-change="fileExplorer.directoryChanged(directory)"></directory-picker>
   </md-content>
   <md-divider></md-divider>
 </md-content>
