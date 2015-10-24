@@ -33,7 +33,11 @@ module SyncPlaylist {
 
                     $scope.directoryInput.on('change', function(event: any) {
                         $scope.$apply(function() {
-                            $scope.onDirectoryChange({ directory: $scope.directoryInput.val() });
+                            var dir = $scope.directoryInput.val();
+
+                            if (dir && dir.trim().length > 0) {
+                                $scope.onDirectoryChange({ directory: dir });
+                            }
                         });
                     });
                 },
