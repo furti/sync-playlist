@@ -2,19 +2,31 @@
 
 module SyncPlaylist {
     export interface DirectoryChangeEvent {
-        directory: string
+        directory: string;
+    }
+
+    interface FileExplorerScope extends angular.IScope {
+        onDirectoryChange(event: DirectoryChangeEvent);
     }
 
     class FileExplorerController {
         public static $inject = ['$scope'];
         public directory: string;
+        private $scope: FileExplorerScope;
 
-        constructor($scope) {
-            this.directory = $scope.directory;
+        constructor($scope: FileExplorerScope) {
+            var controller = this;
+
+            $scope.$watch('directory', function(newDirectory: string) {
+                controller.directory = newDirectory;
+            });
+
+            this.$scope = $scope;
         }
 
         directoryChanged(newDirectory: string) {
             this.directory = newDirectory;
+            this.$scope.onDirectoryChange({ directory: newDirectory });
         }
     }
 

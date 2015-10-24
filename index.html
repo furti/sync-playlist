@@ -26,7 +26,7 @@
       </div>
     </md-toolbar>
 
-    <file-explorer directory="sync.source" on-directory-change="sync.directoryChanged(directory)" flex></file-explorer>
+    <file-explorer directory="sync.settings.sourceDirectory" on-directory-change="sync.directoryChanged('source', directory)" flex></file-explorer>
   </md-sidenav>
 
 
@@ -53,7 +53,7 @@
       </div>
     </md-toolbar>
 
-    <file-explorer directory="sync.target" flex></file-explorer>
+    <file-explorer directory="sync.settings.targetDirectory" on-directory-change="sync.directoryChanged('target', directory)" flex></file-explorer>
 
     <md-button class="md-fab md-fab-bottom-left-edge">
       <md-icon>sync</md-icon>
@@ -68,6 +68,7 @@
   <script type="text/javascript" src="./scripts/sync-playlist.js"></script>
   <script type="text/javascript" src="./scripts/file-explorer.js"></script>
   <script type="text/javascript" src="./scripts/directory-picker.js"></script>
+    <script type="text/javascript" src="./scripts/settings.js"></script>
 
 </body>
 
