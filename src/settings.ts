@@ -9,30 +9,55 @@ module SyncPlaylist {
         public targetDirectory: string;
 
         public persist(): void {
-            var toWrite = JSON.stringify({
-                sourceDirectory: this.sourceDirectory,
+            var source = JSON.stringify({
+                sourceDirectory: this.sourceDirectory
+            });
+            var target = JSON.stringify({
                 targetDirectory: this.targetDirectory
             });
-            fs.writeFile(this.getSettingsLocation(), toWrite, { encoding: 'utf-8' }, function(err) {
+
+
+            fs.writeFile(this.getSettingsLocation(), source, { encoding: 'utf-8' }, function(err) {
+                if (err) throw err;
+            });
+
+            fs.writeFile(this.sourceDirectory + "/sync-playlist.settings", target, { encoding: 'utf-8' }, function(err) {
                 if (err) throw err;
             });
         }
 
         public load(): void {
             var settings = this;
+            //Try to load the last opened source directory.
+            settings.parseFile(settings.getSettingsLocation(), function(content) {
+                settings.sourceDirectory = content.sourceDirectory;
 
-            fs.readFile(this.getSettingsLocation(), { encoding: 'utf-8' }, function(err, data) {
-                if (err) throw err;
-
-                var parsed = JSON.parse(data);
-
-                settings.sourceDirectory = parsed.sourceDirectory;
-                settings.targetDirectory = parsed.targetDirectory;
+                //If we have a last opened directory we load the target directory from there.
+                settings.parseFile(content.sourceDirectory + '/sync-playlist.settings', function(projectSettings) {
+                    settings.targetDirectory = projectSettings.targetDirectory;
+                });
             });
         }
 
+
         private getSettingsLocation(): string {
-            return process.cwd() + '/sync-playlist.json';
+            return process.cwd() + '/last-opened-source.json';
+        }
+
+        private parseFile(file: string, callback: (content: any) => void): void {
+            fs.readFile(file, { encoding: 'utf-8' }, function(err, data) {
+                if (err) {
+                    //If the file was not found we simply do nothing
+                    if (err.code === 'ENOENT') {
+                        return;
+                    }
+                    else {
+                        throw err;
+                    }
+                }
+
+                callback(JSON.parse(data));
+            });
         }
     }
 
