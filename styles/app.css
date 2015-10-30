@@ -5,11 +5,9 @@ md-toolbar md-icon {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
 .md-sidenav-right {
   overflow: visible;
 }
-
 
 /**
  * fab buttons that break the edge of the container element
@@ -42,4 +40,7 @@ file-explorer {
 }
 .file-explorer-root {
   overflow: hidden;
+}
+file-explorer md-list-item.md-2-line .md-list-item-text {
+  margin-left: 8px;
 }

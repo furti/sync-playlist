@@ -20,7 +20,26 @@
           <h4 ng-show="file.artist && file.title">{{file.title}}</h4>
           <p ng-show="file.artist && file.title">{{file.artist}}</p>
         </div>
-        <md-divider></md-divider>
+
+        <md-menu>
+          <md-button ng-click="$mdOpenMenu($event)" class="md-icon-button">
+            <md-icon>more_vert</md-icon>
+          </md-button>
+          <md-menu-content>
+            <md-menu-item>
+              <md-button ng-click="fileExplorer.editTags(file)">
+                <md-icon>edit</md-icon>
+                Edit
+              </md-button>
+            </md-menu-item>
+            <md-menu-item>
+              <md-button ng-click="fileExplorer.delete(file)">
+                <md-icon>delete</md-icon>
+                Delete
+              </md-button>
+            </md-menu-item>
+          </md-menu-content>
+        </md-menu>
       </md-list-item>
     </md-list>
   </md-content>
