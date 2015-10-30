@@ -17,11 +17,11 @@ module SyncPlaylist {
             });
 
 
-            fs.writeFile(this.getSettingsLocation(), source, { encoding: 'utf-8' }, function(err) {
+            fs.writeFile(this.getSettingsLocation(), source, { encoding: 'utf-8' }, function(err: any) {
                 if (err) throw err;
             });
 
-            fs.writeFile(this.sourceDirectory + "/sync-playlist.settings", target, { encoding: 'utf-8' }, function(err) {
+            fs.writeFile(this.sourceDirectory + '/sync-playlist.settings', target, { encoding: 'utf-8' }, function(err: any) {
                 if (err) throw err;
             });
         }
@@ -45,7 +45,7 @@ module SyncPlaylist {
         }
 
         private parseFile(file: string, callback: (content: any) => void): void {
-            fs.readFile(file, { encoding: 'utf-8' }, function(err, data) {
+            fs.readFile(file, { encoding: 'utf-8' }, function(err: any, data: string) {
                 if (err) {
                     //If the file was not found we simply do nothing
                     if (err.code === 'ENOENT') {

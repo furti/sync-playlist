@@ -5,9 +5,11 @@ md-toolbar md-icon {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
 .md-sidenav-right {
   overflow: visible;
 }
+
 
 /**
  * fab buttons that break the edge of the container element
@@ -27,4 +29,17 @@ md-toolbar md-icon {
 
 directory-picker input {
   display: none;
+}
+
+/**
+ * File Explorer
+ */
+
+file-explorer {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.file-explorer-root {
+  overflow: hidden;
 }

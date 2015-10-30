@@ -1,4 +1,4 @@
-<md-content>
+<div layout="column" class="file-explorer-root">
   <md-content layout="row" layout-align="start center" layout-padding>
     <div flex class="directory-label">
       <md-tooltip>{{fileExplorer.directory}}</md-tooltip>
@@ -7,4 +7,21 @@
     <directory-picker on-directory-change="fileExplorer.directoryChanged(directory)"></directory-picker>
   </md-content>
   <md-divider></md-divider>
-</md-content>
+  <md-content flex>
+    <div layout="row" layout-align="space-around">
+      <md-progress-circular ng-if="fileExplorer.loading" md-mode="indeterminate"></md-progress-circular>
+    </div>
+
+    <md-list ng-hide="fileExplorer.loading">
+      <md-list-item class="md-2-line" ng-repeat="file in fileExplorer.files">
+        <div class="md-list-item-text">
+          <h4 ng-show="!file.artist || !file.title">{{file.name}}</h4>
+          <p ng-show="!file.artist || !file.title"></p>
+          <h4 ng-show="file.artist && file.title">{{file.title}}</h4>
+          <p ng-show="file.artist && file.title">{{file.artist}}</p>
+        </div>
+        <md-divider></md-divider>
+      </md-list-item>
+    </md-list>
+  </md-content>
+</div>

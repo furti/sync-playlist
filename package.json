@@ -4,6 +4,7 @@
   "description": "Synchronize your Playlists to a USB Stick, SD Card or whatever you want",
   "main": "index.html",
   "dependencies": {
+    "fluent-ffmpeg": "^2.0.1",
     "nw": "^0.12.3"
   },
   "devDependencies": {},

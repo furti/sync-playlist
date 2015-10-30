@@ -28,7 +28,7 @@ module SyncPlaylist {
                 scope: {
                     onDirectoryChange: '&'
                 },
-                link: function($scope: DirectoryPickerScope, element) {
+                link: function($scope: DirectoryPickerScope, element: angular.IAugmentedJQuery) {
                     $scope.directoryInput = element.find('input');
 
                     $scope.directoryInput.on('change', function(event: any) {
