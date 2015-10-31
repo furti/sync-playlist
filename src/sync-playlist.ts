@@ -2,14 +2,26 @@
 
 module SyncPlaylist {
 
+    export class Playlist {
+        public title: string;
+        public files: Array<SyncFile>;
+    }
+
     class SyncPlaylistController {
         public static $inject = ['settings'];
         public settings: Settings;
+        public playlists: Array<Playlist>
 
         constructor(settings: Settings) {
             this.settings = settings;
 
             this.settings.load();
+
+            this.playlists = [
+                { title: 'test', files: [] },
+                { title: 'Austropop', files: [] },
+                { title: 'One more', files: [] }
+            ]
         }
 
         directoryChanged(type: string, newDirectory: string) {

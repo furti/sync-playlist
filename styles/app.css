@@ -44,3 +44,23 @@ file-explorer {
 file-explorer md-list-item.md-2-line .md-list-item-text {
   margin-left: 8px;
 }
+
+/**
+ * Grid
+ */
+md-grid-tile:hover {
+  cursor: pointer;
+  background-color: #009688;
+  color: #FFFFFF;
+}
+md-grid-tile {
+  background-color: #B2DFDB;
+}
+md-grid-list md-grid-tile figure {
+  align-items: flex-end;
+  padding-bottom: 15px;
+}
+
+.files-count {
+  font-weight: bold;
+}
