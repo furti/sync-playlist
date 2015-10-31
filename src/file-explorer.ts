@@ -4,6 +4,7 @@
 module SyncPlaylist {
     var fs = require('fs');
     var ffmpeg = require('fluent-ffmpeg');
+    var knownFiles = ['sync-playlist.settings'];
 
     export interface DirectoryChangeEvent {
         directory: string;
@@ -72,32 +73,41 @@ module SyncPlaylist {
                 done();
             }
             else {
-                var file = this.directory + '/' + files[index];
+                //Ignore all files known as non audio files.
+                if (this.isKnownFile(files[index])) {
+                    this.setupFiles(files, index + 1, done);
+                } else {
+                    var file = this.directory + '/' + files[index];
 
-                fs.stat(file, (err: any, stats: any) => {
-                    if (err) {
-                        throw err;
-                    }
+                    fs.stat(file, (err: any, stats: any) => {
+                        if (err) {
+                            throw err;
+                        }
 
-                    //Only read the metadata for files
-                    if (stats.isFile()) {
-                        ffmpeg.ffprobe(file, (err: any, metadata: any) => {
-                            if (!err) {
-                                var tags = metadata.format.tags;
-                                this.files.push(new SyncFile(files[index], tags.title, tags.artist));
-                            }
-                            else {
-                                console.log(err);
-                            }
+                        //Only read the metadata for files
+                        if (stats.isFile()) {
+                            ffmpeg.ffprobe(file, (err: any, metadata: any) => {
+                                if (!err) {
+                                    var tags = metadata.format.tags;
+                                    this.files.push(new SyncFile(files[index], tags.title, tags.artist));
+                                }
+                                else {
+                                    console.log(err);
+                                }
 
+                                this.setupFiles(files, index + 1, done);
+                            });
+                        }
+                        else {
                             this.setupFiles(files, index + 1, done);
-                        });
-                    }
-                    else {
-                        this.setupFiles(files, index + 1, done);
-                    }
-                });
+                        }
+                    });
+                }
             }
+        }
+
+        public isKnownFile(file: string): boolean {
+            return knownFiles.indexOf(file) >= 0;
         }
     }
 
