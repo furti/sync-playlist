@@ -41,12 +41,15 @@
 
     <md-content flex layout-padding>
       <md-grid-list md-cols="4" md-row-height="100px" md-gutter="4px">
-        <md-grid-tile md-colspan="2" ng-repeat="playlist in sync.playlists">
+        <md-grid-tile md-colspan="{{playlist.cols}}" md-rowspan="{{playlist.rows}}" ng-repeat="playlist in sync.playlists" ng-class="playlist.background">
           <md-grid-tile-header>
             <h3>{{playlist.title}}</h3>
           </md-grid-tile-header>
-          <div>There are
-            <span class="files-count">{{playlist.files.length}}</span> files in this playlist.</div>
+          <div>
+            <span ng-if="playlist.cols > 1">There are</span>
+            <h6 class="files-count md-title">{{playlist.files.length}} songs</h6>
+            <span ng-if="playlist.cols > 1">in this list.</span>
+          </div>
         </md-grid-tile>
     </md-content>
   </div>

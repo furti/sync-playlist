@@ -48,19 +48,38 @@ file-explorer md-list-item.md-2-line .md-list-item-text {
 /**
  * Grid
  */
+
 md-grid-tile:hover {
   cursor: pointer;
-  background-color: #009688;
-  color: #FFFFFF;
 }
-md-grid-tile {
-  background-color: #B2DFDB;
+md-grid-tile.yellow {
+  background-color: #FFFF8D;
+}
+md-grid-tile.yellow:hover {
+  background-color: #FFFF62;
+}
+md-grid-tile.green {
+  background-color: #B9F6CA;
+}
+md-grid-tile.green:hover {
+  background-color: #91F1AC;
+}
+md-grid-tile.pink {
+  background-color: #FF80AB;
+}
+md-grid-tile.pink:hover {
+  background-color: #FF5891;
+}
+md-grid-tile.blue {
+  background-color: #84FFFF;
+}
+md-grid-tile.blue:hover {
+  background-color: #2FFFFF;
 }
 md-grid-list md-grid-tile figure {
-  align-items: flex-end;
-  padding-bottom: 15px;
+  padding-top: 40px;
 }
-
 .files-count {
   font-weight: bold;
+  display: inline;
 }

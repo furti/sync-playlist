@@ -1,9 +1,13 @@
 /// <reference path='../typings/angular-material/angular-material.d.ts'/>
 
 module SyncPlaylist {
+    var playlistColors = ['blue', 'green', 'orange', 'yellow'];
 
     export class Playlist {
         public title: string;
+        public background: string;
+        public cols: number;
+        public rows: number;
         public files: Array<SyncFile>;
     }
 
@@ -18,9 +22,9 @@ module SyncPlaylist {
             this.settings.load();
 
             this.playlists = [
-                { title: 'test', files: [] },
-                { title: 'Austropop', files: [] },
-                { title: 'One more', files: [] }
+                { title: 'test', background: 'green', cols: 2, rows: 1, files: [] },
+                { title: 'Austropop', background: 'pink', cols: 1, rows: 1, files: [] },
+                { title: 'One more', background: 'blue', cols: 2, rows: 2, files: [] }
             ]
         }
 
