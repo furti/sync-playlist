@@ -76,6 +76,24 @@ md-grid-tile.blue {
 md-grid-tile.blue:hover {
   background-color: #2FFFFF;
 }
+md-grid-tile.gray {
+  background-color: #F5F5F5;
+}
+md-grid-tile.gray:hover {
+  background-color: #DADADA;
+}
+md-grid-tile.red {
+  background-color: #FF8A80;
+}
+md-grid-tile.red:hover {
+  background-color: #FF6558;
+}
+md-grid-tile.purple {
+  background-color: #B388FF;
+}
+md-grid-tile.purple:hover {
+  background-color: #985DFF;
+}
 md-grid-list md-grid-tile figure {
   padding-top: 40px;
 }

@@ -5,8 +5,14 @@ module SyncPlaylist {
     var fs = require('fs');
 
     export class Settings {
+        public static $inject = ['$rootScope'];
         public sourceDirectory: string;
         public targetDirectory: string;
+        private $rootScope: angular.IRootScopeService;
+
+        constructor($rootScope: angular.IRootScopeService) {
+            this.$rootScope = $rootScope;
+        }
 
         public persist(): void {
             var source = JSON.stringify({
@@ -24,6 +30,8 @@ module SyncPlaylist {
             fs.writeFile(this.sourceDirectory + '/sync-playlist.settings', target, { encoding: 'utf-8' }, function(err: any) {
                 if (err) throw err;
             });
+
+            this.$rootScope.$broadcast('settings.changed');
         }
 
         public load(): void {
@@ -35,6 +43,8 @@ module SyncPlaylist {
                 //If we have a last opened directory we load the target directory from there.
                 settings.parseFile(content.sourceDirectory + '/sync-playlist.settings', function(projectSettings) {
                     settings.targetDirectory = projectSettings.targetDirectory;
+
+                    settings.$rootScope.$broadcast('settings.changed', [settings]);
                 });
             });
         }

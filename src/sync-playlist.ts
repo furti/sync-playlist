@@ -1,31 +1,16 @@
 /// <reference path='../typings/angular-material/angular-material.d.ts'/>
 
 module SyncPlaylist {
-    var playlistColors = ['blue', 'green', 'orange', 'yellow'];
-
-    export class Playlist {
-        public title: string;
-        public background: string;
-        public cols: number;
-        public rows: number;
-        public files: Array<SyncFile>;
-    }
-
     class SyncPlaylistController {
-        public static $inject = ['settings'];
+        public static $inject = ['settings', 'playlistManager'];
         public settings: Settings;
-        public playlists: Array<Playlist>
+        public playlistManager: PlaylistManager;
 
-        constructor(settings: Settings) {
+        constructor(settings: Settings, playlistManager: PlaylistManager) {
             this.settings = settings;
+            this.playlistManager = playlistManager;
 
             this.settings.load();
-
-            this.playlists = [
-                { title: 'test', background: 'green', cols: 2, rows: 1, files: [] },
-                { title: 'Austropop', background: 'pink', cols: 1, rows: 1, files: [] },
-                { title: 'One more', background: 'blue', cols: 2, rows: 2, files: [] }
-            ]
         }
 
         directoryChanged(type: string, newDirectory: string) {

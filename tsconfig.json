@@ -11,6 +11,7 @@
     "src/file-explorer.ts",
     "src/settings.ts",
     "src/sync-playlist.ts",
+    "src/playlist.ts",
     "typings/angular-material/angular-material.d.ts",
     "typings/angularjs/angular.d.ts",
     "typings/jquery/jquery.d.ts",
