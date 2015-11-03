@@ -4,26 +4,42 @@ module SyncPlaylist {
     var fs = require('fs');
     var path = require('path');
 
-    export class Playlist {
+    export class SyncPlaylist {
         public path: string;
         public title: string;
         public background: string;
         public cols: number;
         public rows: number;
-        public files: Array<string>;
+        public files: Array<PlaylistFile>;
 
-        constructor(path: string, title: string) {
+        constructor(path: string, title: string, files: Array<PlaylistFile>) {
             this.path = path;
             this.title = title;
-            this.files = [];
+            this.files = files || [];
 
             this.randomBackground();
+            this.calculateSize();
         }
 
-        public randomBackground(): void {
+        private randomBackground(): void {
             var hash = this.hash(this.title);
-            console.log(hash + ' ' + hash % playlistColors.length);
+
             this.background = playlistColors[hash % playlistColors.length];
+        }
+
+        public calculateSize(): void {
+            if (this.files.length >= 20) {
+                this.cols = 2;
+                this.rows = 2;
+            }
+            else if (this.files.length >= 10) {
+                this.cols = 2;
+                this.rows = 1;
+            }
+            else {
+                this.rows = 1;
+                this.cols = 1;
+            }
         }
 
         private hash(string: string): number {
@@ -41,14 +57,16 @@ module SyncPlaylist {
 
 
     export class PlaylistManager {
-        public static $inject = ['$rootScope'];
-        public playlists: Array<Playlist>;
+        public static $inject = ['$rootScope', 'playlistParser'];
+        public playlists: Array<SyncPlaylist>;
         public loading: boolean;
         private $rootScope: angular.IRootScopeService;
         private playlistDirectory: string;
+        private playlistParser: PlaylistParser;
 
-        constructor($rootScope: angular.IRootScopeService) {
+        constructor($rootScope: angular.IRootScopeService, playlistParser: PlaylistParser) {
             this.$rootScope = $rootScope;
+            this.playlistParser = playlistParser;
 
             $rootScope.$on('settings.changed', (event: ng.IAngularEvent, args: Settings[]) => {
                 this.loadPlaylists(args[0].sourceDirectory);
@@ -88,8 +106,10 @@ module SyncPlaylist {
 
                     //Only read the metadata for files
                     if (stats.isFile()) {
-                        this.playlists.push(new Playlist(file, this.buildNameFromFile(file)));
-                        this.setupFiles(files, index + 1, done);
+                        this.playlistParser.parse(file, (err: any, playlist: Playlist) => {
+                            this.playlists.push(new SyncPlaylist(file, this.buildNameFromFile(file), playlist.files));
+                            this.setupFiles(files, index + 1, done);
+                        });
                     }
                     else {
                         this.setupFiles(files, index + 1, done);
