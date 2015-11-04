@@ -49,46 +49,49 @@ file-explorer md-list-item.md-2-line .md-list-item-text {
  * Grid
  */
 
+md-grid-tile.expanded:hover {
+cursor: auto;
+}
 md-grid-tile:hover {
   cursor: pointer;
 }
-md-grid-tile.yellow {
+md-grid-tile.yellow, md-grid-tile.yellow.expanded:hover {
   background-color: #FFFF8D;
 }
 md-grid-tile.yellow:hover {
   background-color: #FFFF62;
 }
-md-grid-tile.green {
+md-grid-tile.green, md-grid-tile.green.expanded:hover {
   background-color: #B9F6CA;
 }
 md-grid-tile.green:hover {
   background-color: #91F1AC;
 }
-md-grid-tile.pink {
+md-grid-tile.pink, md-grid-tile.pink.expanded:hover {
   background-color: #FF80AB;
 }
 md-grid-tile.pink:hover {
   background-color: #FF5891;
 }
-md-grid-tile.blue {
+md-grid-tile.blue, md-grid-tile.blue.expanded:hover {
   background-color: #84FFFF;
 }
 md-grid-tile.blue:hover {
   background-color: #2FFFFF;
 }
-md-grid-tile.gray {
+md-grid-tile.gray, md-grid-tile.gray.expanded:hover {
   background-color: #F5F5F5;
 }
 md-grid-tile.gray:hover {
   background-color: #DADADA;
 }
-md-grid-tile.red {
+md-grid-tile.red, md-grid-tile.red.expanded:hover {
   background-color: #FF8A80;
 }
 md-grid-tile.red:hover {
   background-color: #FF6558;
 }
-md-grid-tile.purple {
+md-grid-tile.purple, md-grid-tile.purple.expanded:hover {
   background-color: #B388FF;
 }
 md-grid-tile.purple:hover {
@@ -100,4 +103,13 @@ md-grid-list md-grid-tile figure {
 .files-count {
   font-weight: bold;
   display: inline;
+}
+md-grid-tile.in {
+  transition: box-shadow 0.4s ease-in-out 0.1s, top 0.5s ease-in-out 0.5s, left 0.5s ease-in-out 0.5s, width 0.5s ease-in-out 0.5s, height 0.5s ease-in-out 0.5s;
+}
+md-grid-tile.out {
+  transition: box-shadow 0.4s ease-in-out 0.6s, top 0.5s ease-in-out 0.1s, left 0.5s ease-in-out 0.1s, width 0.5s ease-in-out 0.1s, height 0.5s ease-in-out 0.1s;
+}
+md-grid-tile.expanded {
+  z-index: 10;
 }

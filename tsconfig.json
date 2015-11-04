@@ -13,6 +13,7 @@
     "src/sync-playlist.ts",
     "src/playlist.ts",
     "src/playlist-parser.ts",
+    "src/expand-grid-tile.ts",
     "typings/angular-material/angular-material.d.ts",
     "typings/angularjs/angular.d.ts",
     "typings/jquery/jquery.d.ts",

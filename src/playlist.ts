@@ -123,6 +123,11 @@ module SyncPlaylist {
         }
     }
 
+    export interface PlaylistViewScope extends ng.IScope {
+        expanded: boolean;
+        closeTile: ($event: ng.IAngularEvent) => void;
+    }
+
     class PlaylistController {
         static $inject = ['playlistManager'];
         public playlistManager: PlaylistManager;

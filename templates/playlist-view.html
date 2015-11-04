@@ -1,5 +1,5 @@
 <md-grid-list md-cols="4" md-row-height="100px" md-gutter="4px">
-  <md-grid-tile md-colspan="{{playlist.cols}}" md-rowspan="{{playlist.rows}}" ng-repeat="playlist in lists.playlistManager.playlists" ng-class="playlist.background">
+  <md-grid-tile md-colspan="{{playlist.cols}}" md-rowspan="{{playlist.rows}}" ng-repeat="playlist in lists.playlistManager.playlists" ng-class="playlist.background" expand-grid-tile>
     <md-grid-tile-header>
       <h3>{{playlist.title}}</h3>
     </md-grid-tile-header>
@@ -8,4 +8,7 @@
       <h6 class="files-count md-title">{{playlist.files.length}} songs</h6>
       <span ng-if="playlist.cols > 1">in this list.</span>
     </div>
+    <md-grid-tile-footer ng-if="expanded" layout-align="center">
+      <md-button ng-click="closeTile($event)">Close</md-button>
+    </md-grid-tile-footer>
   </md-grid-tile>
