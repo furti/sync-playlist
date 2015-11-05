@@ -49,10 +49,10 @@ module SyncPlaylist {
                     if (keyValue.type === 'File') {
                         playlistFiles[keyValue.index].path = keyValue.value;
                     }
-                    else if (keyValue.type === 'Length') {
+                    else if (keyValue.type === 'Title') {
                         playlistFiles[keyValue.index].title = keyValue.value;
                     }
-                    else if (keyValue.type == 'Title') {
+                    else if (keyValue.type === 'Length') {
                         playlistFiles[keyValue.index].length = parseInt(keyValue.value);
                     }
                 }
