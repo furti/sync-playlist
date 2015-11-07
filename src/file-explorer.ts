@@ -24,6 +24,7 @@ module SyncPlaylist {
 
     interface FileExplorerScope extends angular.IScope {
         onDirectoryChange(event: DirectoryChangeEvent): void;
+        controlsHidden: boolean;
     }
 
     class FileExplorerController {
@@ -115,7 +116,8 @@ module SyncPlaylist {
                 restrict: 'E',
                 scope: {
                     directory: '=',
-                    onDirectoryChange: '&' //call wit onDirectoryChange({directory: newDir});
+                    onDirectoryChange: '&',
+                    controlsHidden: '='
                 },
                 controller: FileExplorerController,
                 controllerAs: 'fileExplorer',
