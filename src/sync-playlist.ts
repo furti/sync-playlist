@@ -25,7 +25,7 @@ module SyncPlaylist {
         }
     }
 
-    angular.module('syncPlaylist.main', ['ngMaterial', 'syncPlaylist.directives', 'syncPlaylist.services'])
+    angular.module('syncPlaylist.main', ['ngMaterial', 'ngAnimate', 'syncPlaylist.directives', 'syncPlaylist.services'])
         .config(['$mdThemingProvider', function($mdThemingProvider: ng.material.IThemingProvider) {
             $mdThemingProvider.theme('default')
                 .primaryPalette('teal')

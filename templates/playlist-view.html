@@ -3,11 +3,20 @@
     <md-grid-tile-header>
       <h3>{{playlist.title}}</h3>
     </md-grid-tile-header>
-    <div>
+    <div ng-hide="expanded">
       <span ng-if="playlist.cols > 1">There are</span>
       <h6 class="files-count md-title">{{playlist.files.length}} songs</h6>
       <span ng-if="playlist.cols > 1">in this list.</span>
     </div>
+    <md-list ng-show="expanded" flex class="playlist-files">
+      <md-list-item ng-repeat="file in playlist.files">
+        <p>{{file.title}}</p>
+        <md-button class="md-icon-button">
+          <md-icon>delete</md-icon>
+        </md-button>
+        <md-divider></md-divider>
+      </md-list-item>
+    </md-list>
     <md-grid-tile-footer ng-if="expanded" layout-align="center">
       <md-button ng-click="closeTile($event)">Close</md-button>
     </md-grid-tile-footer>
