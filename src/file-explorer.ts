@@ -47,8 +47,6 @@ module SyncPlaylist {
         public directoryChanged(newDirectory: string) {
             this.directory = newDirectory;
             this.$scope.onDirectoryChange({ directory: newDirectory });
-
-            this.loadFiles();
         }
 
         private loadFiles(): void {
