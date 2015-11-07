@@ -14,11 +14,16 @@ module SyncPlaylist {
         name: string;
         title: string;
         artist: string;
+        editing: boolean;
 
         constructor(name: string, title: string, artist: string) {
             this.name = name;
             this.artist = artist;
             this.title = title;
+        }
+
+        public editTags(): void {
+            this.editing = true;
         }
     }
 
@@ -48,6 +53,17 @@ module SyncPlaylist {
         public directoryChanged(newDirectory: string) {
             this.directory = newDirectory;
             this.$scope.onDirectoryChange({ directory: newDirectory });
+        }
+
+        public persistTags(file: SyncFile): void {
+            var path = this.directory + '/' + file.name;
+            console.log(path);
+
+            var command = ffmpeg(path)
+                .outputOptions('-metadata', 'title=' + file.title)
+                .outputOptions('-metadata', 'artist=' + file.artist)
+                .outputOptions('-id3v2_version 3')
+                .save(path);
         }
 
         private loadFiles(): void {

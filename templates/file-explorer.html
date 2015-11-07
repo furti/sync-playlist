@@ -13,33 +13,54 @@
     </div>
 
     <md-list ng-hide="fileExplorer.loading">
-      <md-list-item class="md-2-line" ng-repeat="file in fileExplorer.files">
-        <div class="md-list-item-text">
-          <h4 ng-show="!file.artist || !file.title">{{file.name}}</h4>
-          <p ng-show="!file.artist || !file.title"></p>
-          <h4 ng-show="file.artist && file.title">{{file.title}}</h4>
-          <p ng-show="file.artist && file.title">{{file.artist}}</p>
-        </div>
+      <md-list-item class="md-2-line" ng-class="{'editing': file.editing}" ng-repeat="file in fileExplorer.files">
+        <div class="layout-column" flex>
+          <div layout="row" flex>
+            <div class="md-list-item-text">
+              <h4 ng-show="!file.artist || !file.title">{{file.name}}</h4>
+              <p ng-show="!file.artist || !file.title"></p>
+              <h4 ng-show="file.artist && file.title">{{file.title}}</h4>
+              <p ng-show="file.artist && file.title">{{file.artist}}</p>
+            </div>
 
-        <md-menu ng-if="!controlsHidden">
-          <md-button ng-click="$mdOpenMenu($event)" class="md-icon-button">
-            <md-icon>more_vert</md-icon>
-          </md-button>
-          <md-menu-content>
-            <md-menu-item>
-              <md-button ng-click="file.editTags()">
-                <md-icon>edit</md-icon>
-                Edit
+            <md-menu ng-if="!controlsHidden">
+              <md-button ng-click="$mdOpenMenu($event)" class="md-icon-button">
+                <md-icon>more_vert</md-icon>
               </md-button>
-            </md-menu-item>
-            <md-menu-item>
-              <md-button ng-click="fileExplorer.delete(file)">
-                <md-icon>delete</md-icon>
-                Delete
-              </md-button>
-            </md-menu-item>
-          </md-menu-content>
-        </md-menu>
+              <md-menu-content>
+                <md-menu-item>
+                  <md-button ng-click="file.editTags()">
+                    <md-icon>edit</md-icon>
+                    Edit
+                  </md-button>
+                </md-menu-item>
+                <md-menu-item>
+                  <md-button ng-click="fileExplorer.delete(file)">
+                    <md-icon>delete</md-icon>
+                    Delete
+                  </md-button>
+                </md-menu-item>
+              </md-menu-content>
+            </md-menu>
+          </div>
+
+          <form class="edit-tags" name="tagsForm" ng-show="file.editing">
+            <p class="md-body-2">{{file.name}}</p>
+            <md-input-container>
+              <label>Title</label>
+              <input name="title" ng-model="file.title">
+            </md-input-container>
+            <md-input-container class="artist-container">
+              <label>Artist</label>
+              <input name="artist" ng-model="file.artist">
+            </md-input-container>
+            <div layout="row" layout-align="end">
+              <md-button ng-click="file.editing=false" class="md-hue-3">Cancel</md-button>
+              <md-button ng-click="fileExplorer.persistTags(file); file.editing = false;" class="md-accent md-hue-3 md-primary">Save</md-button>
+            </div>
+            <md-divider></md-divider>
+          </form>
+        </div>
       </md-list-item>
     </md-list>
   </md-content>

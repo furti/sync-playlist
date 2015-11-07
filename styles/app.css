@@ -8,6 +8,9 @@ md-toolbar md-icon {
 .md-sidenav-right {
   overflow: visible;
 }
+p.md-body-2 {
+  font-weight: bold;
+}
 
 /**
  * fab buttons that break the edge of the container element
@@ -41,8 +44,31 @@ file-explorer {
 .file-explorer-root {
   overflow: hidden;
 }
+file-explorer md-list-item.md-2-line {
+  justify-content: flex-start;
+}
+file-explorer md-list-item md-divider {
+  position: static;
+}
 file-explorer md-list-item.md-2-line .md-list-item-text {
   margin-left: 8px;
+}
+file-explorer md-list-item.editing {
+  background-color: #B2DFDB;
+}
+form.edit-tags {
+  padding-left: 20px;
+  max-height: 300px;
+  overflow: hidden;
+}
+form.edit-tags .artist-container {
+  padding-bottom: 0;
+}
+form.edit-tags.ng-hide {
+  max-height: 0;
+}
+form.edit-tags.ng-hide-add, form.edit-tags.ng-hide-remove {
+  transition: max-height 0.4s linear;
 }
 
 /**
