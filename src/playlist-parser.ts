@@ -18,6 +18,13 @@ module SyncPlaylist {
     }
 
     export class PlaylistParser {
+        public save(file: string, playlist: Playlist): void {
+            fs.writeFile(file, this.createContent(playlist), { encoding: 'utf8' }, (err: any) => {
+                if (err) {
+                    throw err;
+                }
+            });
+        }
 
         public parse(file: string, callback: (err: any, playlist: Playlist) => void): void {
             fs.readFile(file, { encoding: 'utf8' }, (err: any, content: string) => {
@@ -27,6 +34,23 @@ module SyncPlaylist {
 
                 callback(undefined, this.parseContent(content));
             });
+        }
+
+        private createContent(playlist: Playlist): string {
+            var playlistContent: string = '', index: number = 1;
+
+            for (var file of playlist.files) {
+                playlistContent += `File${index}=${file.path}
+Title${index}=${file.title}
+Length${index}=${file.length}
+`;
+                index++;
+            }
+
+            return `﻿[playlist]
+${playlistContent}NumberOfEntries=${playlist.files.length}
+Version=2
+`;
         }
 
         private parseContent(content: string): Playlist {

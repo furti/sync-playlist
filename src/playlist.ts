@@ -57,19 +57,39 @@ module SyncPlaylist {
 
 
     export class PlaylistManager {
-        public static $inject = ['$rootScope', 'playlistParser'];
+        public static $inject = ['$rootScope', 'playlistParser', 'syncPlaylistUtils'];
         public playlists: Array<SyncPlaylist>;
         public loading: boolean;
         private $rootScope: angular.IRootScopeService;
         private playlistDirectory: string;
         private playlistParser: PlaylistParser;
+        private utils: Utils;
 
-        constructor($rootScope: angular.IRootScopeService, playlistParser: PlaylistParser) {
+        constructor($rootScope: angular.IRootScopeService, playlistParser: PlaylistParser, utils: Utils) {
             this.$rootScope = $rootScope;
             this.playlistParser = playlistParser;
+            this.utils = utils;
 
             $rootScope.$on('settings.changed', (event: ng.IAngularEvent, args: Settings[]) => {
                 this.loadPlaylists(args[0].sourceDirectory);
+            });
+        }
+
+        public removeFromList(playlist: SyncPlaylist, file: PlaylistFile): void {
+            if (!playlist.files) {
+                return;
+            }
+
+            this.utils.removeFromArray(playlist.files, file, (file: PlaylistFile, other: PlaylistFile) => {
+                return file.path === other.path;
+            });
+
+            this.savePlaylist(playlist);
+        }
+
+        public savePlaylist(playlist: SyncPlaylist): void {
+            this.playlistParser.save(playlist.path, {
+                files: playlist.files
             });
         }
 
@@ -92,7 +112,7 @@ module SyncPlaylist {
             });
         }
 
-        public setupFiles(files: string[], index: number, done: () => any): any {
+        private setupFiles(files: string[], index: number, done: () => any): any {
             if (index === files.length) {
                 done();
             }
