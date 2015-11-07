@@ -66,8 +66,6 @@ module SyncPlaylist {
                 playlist.files.push(playlistFiles[index]);
             }
 
-            console.log(playlist);
-
             return playlist;
         }
 
