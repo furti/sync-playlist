@@ -125,15 +125,15 @@ module SyncPlaylist {
 
     export interface PlaylistViewScope extends ng.IScope {
         expanded: boolean;
+        playlistManager: PlaylistManager;
         closeTile: ($event: ng.IAngularEvent) => void;
     }
 
     class PlaylistController {
-        static $inject = ['playlistManager'];
-        public playlistManager: PlaylistManager;
+        static $inject = ['$scope', 'playlistManager'];
 
-        constructor(playlistManager: PlaylistManager) {
-            this.playlistManager = playlistManager;
+        constructor($scope: PlaylistViewScope, playlistManager: PlaylistManager) {
+            $scope.playlistManager = playlistManager;
         }
     }
 
@@ -145,7 +145,6 @@ module SyncPlaylist {
             return {
                 restrict: 'E',
                 controller: PlaylistController,
-                controllerAs: 'lists',
                 templateUrl: 'templates/playlist-view.html'
             };
         }]);

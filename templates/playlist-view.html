@@ -1,5 +1,5 @@
 <md-grid-list md-cols="4" md-row-height="100px" md-gutter="4px">
-  <md-grid-tile md-colspan="{{playlist.cols}}" md-rowspan="{{playlist.rows}}" ng-repeat="playlist in lists.playlistManager.playlists" ng-class="playlist.background" expand-grid-tile>
+  <md-grid-tile md-colspan="{{playlist.cols}}" md-rowspan="{{playlist.rows}}" ng-repeat="playlist in playlistManager.playlists" ng-class="playlist.background" expand-grid-tile>
     <md-grid-tile-header>
       <h3>{{playlist.title}}</h3>
     </md-grid-tile-header>
@@ -11,7 +11,7 @@
     <md-list ng-show="expanded" flex class="playlist-files">
       <md-list-item ng-repeat="file in playlist.files">
         <p>{{file.title}}</p>
-        <md-button class="md-icon-button">
+        <md-button class="md-icon-button" ng-click="playlistManager.removeFromList(playlist, file)">
           <md-icon>delete</md-icon>
         </md-button>
         <md-divider></md-divider>
