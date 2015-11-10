@@ -15,6 +15,7 @@ module SyncPlaylist {
         title: string;
         artist: string;
         editing: boolean;
+        editingPlaylists: boolean;
 
         //tmp Properties are used for editing. So the actual properties do not change on cancel
         private tmpTitle: string;
@@ -42,6 +43,14 @@ module SyncPlaylist {
             this.title = this.tmpTitle;
             this.artist = this.tmpArtist;
             this.cancelEdit();
+        }
+
+        public editPlaylists(): void {
+            this.editingPlaylists = true;
+        }
+
+        public cancelEditPlaylists(): void {
+            this.editingPlaylists = false;
         }
     }
 

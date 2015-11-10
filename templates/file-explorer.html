@@ -13,7 +13,7 @@
     </div>
 
     <md-list ng-hide="fileExplorer.loading">
-      <md-list-item class="md-2-line" ng-class="{'editing': file.editing}" ng-repeat="file in fileExplorer.files">
+      <md-list-item class="md-2-line" ng-class="{'editing': file.editing || file.editingPlaylists}" ng-repeat="file in fileExplorer.files">
         <div class="layout-column" flex>
           <div layout="row" flex>
             <div class="md-list-item-text">
@@ -40,11 +40,17 @@
                     Delete
                   </md-button>
                 </md-menu-item>
+                <md-menu-item>
+                  <md-button ng-click="file.editPlaylists()">
+                    <md-icon>queue_music</md-icon>
+                    Playlists
+                  </md-button>
+                </md-menu-item>
               </md-menu-content>
             </md-menu>
           </div>
 
-          <form class="edit-tags" name="tagsForm" ng-show="file.editing">
+          <form class="edit-form" name="tagsForm" ng-show="file.editing">
             <p class="md-body-2">{{file.name}}</p>
             <md-input-container>
               <label>Title</label>
@@ -58,8 +64,25 @@
               <md-button ng-click="file.cancelEdit()" class="md-hue-3">Cancel</md-button>
               <md-button ng-click="file.saveTags(); fileExplorer.persistTags(file);" class="md-accent md-hue-3 md-primary">Save</md-button>
             </div>
-            <md-divider></md-divider>
           </form>
+
+          <md-list class="edit-form" name="playlistsForm" ng-if="file.editingPlaylists">
+            <md-list-item>
+              <md-checkbox ng-model="file.test1" class="md-secondary"></md-checkbox>
+              <p>Andreas Gabalier</p>
+            </md-list-item>
+            <md-list-item>
+              <md-checkbox ng-model="file.test2" class="md-secondary"></md-checkbox>
+              <p>Andreas Gabalier</p>
+            </md-list-item>
+            <md-list-item>
+              <md-checkbox ng-model="file.test" class="md-secondary"></md-checkbox>
+              <p>Andreas Gabalier</p>
+            </md-list-item>
+            <div layout="row" layout-align="end">
+              <md-button ng-click="file.cancelEditPlaylists()" class="md-hue-3">Cancel</md-button>
+            </div>
+          </md-list>
         </div>
       </md-list-item>
     </md-list>

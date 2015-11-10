@@ -56,18 +56,21 @@ file-explorer md-list-item.md-2-line .md-list-item-text {
 file-explorer md-list-item.editing {
   background-color: #B2DFDB;
 }
-form.edit-tags {
+.edit-form {
   padding-left: 20px;
   max-height: 300px;
   overflow: hidden;
 }
-form.edit-tags .artist-container {
+.edit-form.ng-leave, .edit-form.ng-enter.ng-enter-active {
+  max-height: 300px;
+}
+.edit-form .artist-container {
   padding-bottom: 0;
 }
-form.edit-tags.ng-hide {
+.edit-form.ng-hide, .edit-form.ng-enter, .edit-form.ng-leave-active {
   max-height: 0;
 }
-form.edit-tags.ng-hide-add, form.edit-tags.ng-hide-remove {
+.edit-form.ng-hide-add, .edit-form.ng-enter, .edit-form.ng-hide-remove, .edit-form.ng-leave {
   transition: max-height 0.4s linear;
 }
 
