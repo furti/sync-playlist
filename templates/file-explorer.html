@@ -48,15 +48,15 @@
             <p class="md-body-2">{{file.name}}</p>
             <md-input-container>
               <label>Title</label>
-              <input name="title" ng-model="file.title">
+              <input name="title" ng-model="file.tmpTitle">
             </md-input-container>
             <md-input-container class="artist-container">
               <label>Artist</label>
-              <input name="artist" ng-model="file.artist">
+              <input name="artist" ng-model="file.tmpArtist">
             </md-input-container>
             <div layout="row" layout-align="end">
-              <md-button ng-click="file.editing=false" class="md-hue-3">Cancel</md-button>
-              <md-button ng-click="fileExplorer.persistTags(file); file.editing = false;" class="md-accent md-hue-3 md-primary">Save</md-button>
+              <md-button ng-click="file.cancelEdit()" class="md-hue-3">Cancel</md-button>
+              <md-button ng-click="file.saveTags(); fileExplorer.persistTags(file);" class="md-accent md-hue-3 md-primary">Save</md-button>
             </div>
             <md-divider></md-divider>
           </form>
