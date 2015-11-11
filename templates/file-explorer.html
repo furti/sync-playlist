@@ -24,7 +24,7 @@
             </div>
 
             <md-menu ng-if="!controlsHidden">
-              <md-button ng-click="$mdOpenMenu($event)" class="md-icon-button">
+              <md-button ng-click="$mdOpenMenu($event)" class="md-icon-button" ng-disabled="file.editing || file.editingPlaylists">
                 <md-icon>more_vert</md-icon>
               </md-button>
               <md-menu-content>
@@ -67,20 +67,13 @@
           </form>
 
           <md-list class="edit-form" name="playlistsForm" ng-if="file.editingPlaylists">
-            <md-list-item>
-              <md-checkbox ng-model="file.test1" class="md-secondary"></md-checkbox>
-              <p>Andreas Gabalier</p>
-            </md-list-item>
-            <md-list-item>
-              <md-checkbox ng-model="file.test2" class="md-secondary"></md-checkbox>
-              <p>Andreas Gabalier</p>
-            </md-list-item>
-            <md-list-item>
-              <md-checkbox ng-model="file.test" class="md-secondary"></md-checkbox>
-              <p>Andreas Gabalier</p>
+            <md-list-item ng-repeat="list in file.tmpPlaylists">
+              <md-checkbox ng-model="list.active" class="md-secondary"></md-checkbox>
+              <p>{{list.title}}</p>
             </md-list-item>
             <div layout="row" layout-align="end">
               <md-button ng-click="file.cancelEditPlaylists()" class="md-hue-3">Cancel</md-button>
+              <md-button ng-click="file.saveEditPlaylists()" class="md-accent md-hue-3 md-primary">Save</md-button>
             </div>
           </md-list>
         </div>

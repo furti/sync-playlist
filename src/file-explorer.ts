@@ -20,11 +20,14 @@ module SyncPlaylist {
         //tmp Properties are used for editing. So the actual properties do not change on cancel
         private tmpTitle: string;
         private tmpArtist: string;
+        private playlistManager: PlaylistManager;
+        private tmpPlaylists: Array<EditingPlaylist>;
 
-        constructor(name: string, title: string, artist: string) {
+        constructor(name: string, title: string, artist: string, playlistManager: PlaylistManager) {
             this.name = name;
             this.artist = artist;
             this.title = title;
+            this.playlistManager = playlistManager;
         }
 
         public editTags(): void {
@@ -47,10 +50,17 @@ module SyncPlaylist {
 
         public editPlaylists(): void {
             this.editingPlaylists = true;
+            this.tmpPlaylists = this.playlistManager.findPlaylistsForEdit(this.name);
         }
 
         public cancelEditPlaylists(): void {
             this.editingPlaylists = false;
+            this.tmpPlaylists = null;
+        }
+
+        public saveEditPlaylists(): void {
+            this.playlistManager.savePlaylistsForEdit(this, this.tmpPlaylists);
+            this.cancelEditPlaylists();
         }
     }
 
@@ -60,13 +70,16 @@ module SyncPlaylist {
     }
 
     class FileExplorerController {
-        public static $inject = ['$scope'];
+        public static $inject = ['$scope', 'playlistManager'];
+
         public directory: string;
         public files: Array<SyncFile>;
         public loading: boolean;
-        private $scope: FileExplorerScope;
 
-        constructor($scope: FileExplorerScope) {
+        private $scope: FileExplorerScope;
+        private playlistManager: PlaylistManager;
+
+        constructor($scope: FileExplorerScope, playlistManager: PlaylistManager) {
             var controller = this;
 
             $scope.$watch('directory', (newDirectory: string) => {
@@ -75,6 +88,7 @@ module SyncPlaylist {
             });
 
             this.$scope = $scope;
+            this.playlistManager = playlistManager;
         }
 
         public directoryChanged(newDirectory: string) {
@@ -131,7 +145,7 @@ module SyncPlaylist {
                             ffmpeg.ffprobe(file, (err: any, metadata: any) => {
                                 if (!err) {
                                     var tags = metadata.format.tags;
-                                    this.files.push(new SyncFile(files[index], tags.title, tags.artist));
+                                    this.files.push(new SyncFile(files[index], tags.title, tags.artist, this.playlistManager));
                                 }
                                 else {
                                     console.log(err);

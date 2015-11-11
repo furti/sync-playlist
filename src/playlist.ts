@@ -21,12 +21,6 @@ module SyncPlaylist {
             this.calculateSize();
         }
 
-        private randomBackground(): void {
-            var hash = this.hash(this.title);
-
-            this.background = playlistColors[hash % playlistColors.length];
-        }
-
         public calculateSize(): void {
             if (this.files.length >= 20) {
                 this.cols = 2;
@@ -42,6 +36,39 @@ module SyncPlaylist {
             }
         }
 
+        public containsFile(fileName: string): boolean {
+            for (var file of this.files) {
+                if (file.path === fileName) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public removeFile(fileName: string): void {
+            var found = false;
+
+            for (var index in this.files) {
+                var file = this.files[index];
+
+                if (file.path === fileName) {
+                    found = true;
+                    break;
+                }
+            }
+
+            if (found) {
+                this.files.splice(index, 1);
+            }
+        }
+
+        private randomBackground(): void {
+            var hash = this.hash(this.title);
+
+            this.background = playlistColors[hash % playlistColors.length];
+        }
+
         private hash(string: string): number {
             var hash = 0, i: number, char: number;
             if (string.length == 0) return hash;
@@ -54,12 +81,24 @@ module SyncPlaylist {
             return hash;
         }
     }
-
+    /**
+     * When editing the playlists of a file we need to know the playlists the file is already in.
+     * This is done with the active flag.
+     *
+     * After the User saves the playlists we can remove the file from all not active playlists and add it to
+     * all new ones.
+     */
+    export interface EditingPlaylist {
+        title: string;
+        active: boolean;
+    }
 
     export class PlaylistManager {
         public static $inject = ['$rootScope', 'playlistParser', 'syncPlaylistUtils'];
+
         public playlists: Array<SyncPlaylist>;
         public loading: boolean;
+
         private $rootScope: angular.IRootScopeService;
         private playlistDirectory: string;
         private playlistParser: PlaylistParser;
@@ -73,6 +112,59 @@ module SyncPlaylist {
             $rootScope.$on('settings.changed', (event: ng.IAngularEvent, args: Settings[]) => {
                 this.loadPlaylists(args[0].sourceDirectory);
             });
+        }
+
+        public findPlaylistsForEdit(fileName: string): Array<EditingPlaylist> {
+            var editingPlaylists: Array<EditingPlaylist> = [], playlist: SyncPlaylist;
+
+            for (playlist of this.playlists) {
+                editingPlaylists.push({
+                    title: playlist.title,
+                    active: playlist.containsFile(fileName)
+                });
+            }
+
+            return editingPlaylists;
+        }
+
+        public savePlaylistsForEdit(file: SyncFile, playlists: Array<EditingPlaylist>): void {
+            for (var editingPlaylist of playlists) {
+                var playlist = this.findPlaylist(editingPlaylist.title);
+
+                if (!playlist) {
+                    continue;
+                }
+
+                /*
+                 * If not in the playlist but should or in the playlist but should not be
+                 * --> We have to change the list and save it
+                 */
+                if (editingPlaylist.active && !playlist.containsFile(file.name)) {
+                    playlist.files.push({
+                        path: file.name,
+                        length: -1,
+                        title: `${file.title} - ${file.artist}`
+                    });
+
+                    this.savePlaylist(playlist);
+                }
+                else if (!editingPlaylist.active && playlist.containsFile(file.name)) {
+                    playlist.removeFile(file.name);
+                    this.savePlaylist(playlist);
+                }
+            }
+        }
+
+        private findPlaylist(title: string): SyncPlaylist {
+            if (this.playlists) {
+                for (var playlist of this.playlists) {
+                    if (playlist.title === title) {
+                        return playlist;
+                    }
+                }
+            }
+
+            return null;
         }
 
         public removeFromList(playlist: SyncPlaylist, file: PlaylistFile): void {
@@ -89,8 +181,34 @@ module SyncPlaylist {
 
         public savePlaylist(playlist: SyncPlaylist): void {
             this.playlistParser.save(playlist.path, {
-                files: playlist.files
+                files: this.appendRelativePath(playlist.files)
             });
+        }
+
+        private appendRelativePath(files: PlaylistFile[]): Array<PlaylistFile> {
+            var filesCopy: PlaylistFile[] = [];
+
+            if (files) {
+                for (var file of files) {
+                    filesCopy.push({
+                        path: '../' + file.path,
+                        title: file.title,
+                        length: file.length
+                    });
+                }
+            }
+
+            return filesCopy;
+        }
+
+        private removeRelativePath(files: PlaylistFile[]): Array<PlaylistFile> {
+            if (files) {
+                for (var file of files) {
+                    file.path = file.path.substring(3);
+                }
+            }
+
+            return files;
         }
 
         private loadPlaylists(directory: string) {
@@ -127,7 +245,7 @@ module SyncPlaylist {
                     //Only read the metadata for files
                     if (stats.isFile()) {
                         this.playlistParser.parse(file, (err: any, playlist: Playlist) => {
-                            this.playlists.push(new SyncPlaylist(file, this.buildNameFromFile(file), playlist.files));
+                            this.playlists.push(new SyncPlaylist(file, this.buildNameFromFile(file), this.removeRelativePath(playlist.files)));
                             this.setupFiles(files, index + 1, done);
                         });
                     }
