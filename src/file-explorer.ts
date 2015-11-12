@@ -107,6 +107,20 @@ module SyncPlaylist {
                 .save(path);
         }
 
+        public deleteFile(file: SyncFile): void {
+            var path = this.directory + '/' + file.name;
+
+            this.playlistManager.removeFileFromPlaylists(file);
+
+            fs.unlink(path, (err: any) => {
+                if (err) {
+                    throw err;
+                }
+
+                this.files.splice(this.files.indexOf(file), 1);
+            });
+        }
+
         private loadFiles(): void {
             if (!this.directory) {
                 return;

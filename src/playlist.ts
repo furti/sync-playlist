@@ -155,6 +155,18 @@ module SyncPlaylist {
             }
         }
 
+        public removeFileFromPlaylists(file: SyncFile): void {
+            var editPlaylits = this.findPlaylistsForEdit(file.name);
+
+            if (editPlaylits) {
+                editPlaylits.forEach(function(editPlaylist) {
+                    editPlaylist.active = false;
+                });
+            }
+
+            this.savePlaylistsForEdit(file, editPlaylits);
+        }
+
         private findPlaylist(title: string): SyncPlaylist {
             if (this.playlists) {
                 for (var playlist of this.playlists) {
