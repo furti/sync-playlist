@@ -70,7 +70,7 @@ module SyncPlaylist {
     }
 
     class FileExplorerController {
-        public static $inject = ['$scope', 'playlistManager'];
+        public static $inject = ['$scope', 'playlistManager', '$mdDialog'];
 
         public directory: string;
         public files: Array<SyncFile>;
@@ -78,8 +78,9 @@ module SyncPlaylist {
 
         private $scope: FileExplorerScope;
         private playlistManager: PlaylistManager;
+        private $mdDialog: ng.material.IDialogService;
 
-        constructor($scope: FileExplorerScope, playlistManager: PlaylistManager) {
+        constructor($scope: FileExplorerScope, playlistManager: PlaylistManager, $mdDialog: ng.material.IDialogService) {
             var controller = this;
 
             $scope.$watch('directory', (newDirectory: string) => {
@@ -89,6 +90,7 @@ module SyncPlaylist {
 
             this.$scope = $scope;
             this.playlistManager = playlistManager;
+            this.$mdDialog = $mdDialog;
         }
 
         public directoryChanged(newDirectory: string) {
@@ -108,16 +110,25 @@ module SyncPlaylist {
         }
 
         public deleteFile(file: SyncFile): void {
-            var path = this.directory + '/' + file.name;
+            var dialog = this.$mdDialog.confirm()
+                .title('Delete File')
+                .ok('Delete')
+                .cancel('Cancel')
+                .content(`<p>Do you really want to delete <b>${file.name}</b>?
+                  </p><p><b>Can not be undone!</b></p>`);
 
-            this.playlistManager.removeFileFromPlaylists(file);
+            this.$mdDialog.show(dialog).then(() => {
+                var path = this.directory + '/' + file.name;
 
-            fs.unlink(path, (err: any) => {
-                if (err) {
-                    throw err;
-                }
+                this.playlistManager.removeFileFromPlaylists(file);
 
-                this.files.splice(this.files.indexOf(file), 1);
+                fs.unlink(path, (err: any) => {
+                    if (err) {
+                        throw err;
+                    }
+
+                    this.files.splice(this.files.indexOf(file), 1);
+                });
             });
         }
 
